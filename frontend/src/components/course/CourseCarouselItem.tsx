@@ -1,5 +1,5 @@
 import TempMapImage from "@/assets/images/course/temp_map.png"
-import { Progress } from "@/components/ui/progress"
+import { Progress } from "@/components/common/progress"
 import { cn } from "@/lib/utils"
 import { Course } from "@/types/course/course.type"
 import Image from "next/image"

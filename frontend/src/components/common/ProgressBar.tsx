@@ -1,6 +1,6 @@
 import StepIcon from "@/assets/icons/common/progress-step-icon.svg"
+import { Progress } from "@/components/common/progress"
 import { cn } from "@/lib/utils"
-import { Progress } from "../ui/progress"
 
 interface ProgressBarProps {
   value: number

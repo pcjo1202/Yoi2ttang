@@ -6,7 +6,7 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/drawer"
+} from "@/components/common/drawer"
 import useDrawer from "@/hooks/common/useDrawer"
 import useGetClearedMembers from "@/hooks/course/useGetClearedMembers"
 import { CourseClearedMemberPaginationResponse } from "@/types/course/course.type"

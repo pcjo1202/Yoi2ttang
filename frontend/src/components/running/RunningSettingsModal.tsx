@@ -1,8 +1,8 @@
 "use client"
 
+import { Checkbox } from "@/components/common/checkbox"
+import { Switch } from "@/components/common/switch"
 import { useState } from "react"
-import { Switch } from "@/components/ui/switch"
-import { Checkbox } from "@/components/ui/checkbox"
 
 interface RunningSettingsModalProps {
   onClose: () => void
