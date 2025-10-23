@@ -2,7 +2,6 @@ import { getMapBounds } from "@/lib/map/utils"
 import { CLUSTERING_ZOOM_LEVEL, MIN_ZOOM_LEVEL } from "@/stores/useTileMapStore"
 import { Coordinates, NaverMap } from "@/types/map/navermaps"
 import { ViewMode } from "@/types/map/tile"
-import { debounce } from "lodash-es"
 import { useCallback, useMemo } from "react"
 
 interface UseTileMapHandlerProps {
@@ -65,43 +64,42 @@ const useTileMapHandler = ({
 
   // 메인 핸들러 - debounce를 useMemo로 한 번만 생성
   const handleCenterChange = useMemo(
-    () =>
-      debounce(async (center: Coordinates, map: NaverMap | null) => {
-        // Early return: 유효하지 않은 좌표
-        if (!isValidCoordinates(center)) {
-          return
-        }
+    () => async (center: Coordinates, map: NaverMap | null) => {
+      // Early return: 유효하지 않은 좌표
+      if (!isValidCoordinates(center)) {
+        return
+      }
 
-        // Early return: 맵이 없는 경우
-        if (!map) {
-          return
-        }
+      // Early return: 맵이 없는 경우
+      if (!map) {
+        return
+      }
 
-        const zoom = map.getZoom() // 줌 레벨
-        const viewMode = getViewMode(zoom) // 뷰 모드
+      const zoom = map.getZoom() // 줌 레벨
+      const viewMode = getViewMode(zoom) // 뷰 모드
 
-        // 클러스터 뷰 설정
-        if (viewMode === ViewMode.CLUSTER) {
-          setIsClusterView(true)
-        } else {
-          setIsClusterView(false)
-        }
+      // 클러스터 뷰 설정
+      if (viewMode === ViewMode.CLUSTER) {
+        setIsClusterView(true)
+      } else {
+        setIsClusterView(false)
+      }
 
-        console.log(`🗺️ Map change: zoom=${zoom}, mode=${viewMode}`)
+      console.log(`🗺️ Map change: zoom=${zoom}, mode=${viewMode}`)
 
-        // 뷰 모드에 따른 처리
-        switch (viewMode) {
-          case ViewMode.HIDDEN:
-            handleHiddenView()
-            break
-          case ViewMode.CLUSTER:
-            await handleClusterView(zoom, center)
-            break
-          case ViewMode.TILE:
-            await handleTileView(center, map)
-            break
-        }
-      }, 500), // 500ms debounce
+      // 뷰 모드에 따른 처리
+      switch (viewMode) {
+        case ViewMode.HIDDEN:
+          handleHiddenView()
+          break
+        case ViewMode.CLUSTER:
+          await handleClusterView(zoom, center)
+          break
+        case ViewMode.TILE:
+          await handleTileView(center, map)
+          break
+      }
+    },
     [
       isValidCoordinates,
       getViewMode,
