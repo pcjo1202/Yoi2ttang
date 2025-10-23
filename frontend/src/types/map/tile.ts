@@ -58,6 +58,13 @@ export enum TileViewOption {
   UNCLAIMED = "unclaimed",
 }
 
+// 줌 레벨 타입 정의
+export enum ViewMode {
+  HIDDEN = "HIDDEN", // MIN_ZOOM_LEVEL 이하
+  CLUSTER = "CLUSTER", // CLUSTERING_ZOOM_LEVEL 미만
+  TILE = "TILE", // CLUSTERING_ZOOM_LEVEL 이상
+}
+
 export interface TileStrategyReturnType {
   tileData: Tile[]
   clusterData: TileCluster[]
