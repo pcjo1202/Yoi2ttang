@@ -59,4 +59,5 @@ cloud:
     stack:
       auto: false
     s3:
+      enable: false # s3 비활성화
       bucket: ${AWS_S3_BUCKET}

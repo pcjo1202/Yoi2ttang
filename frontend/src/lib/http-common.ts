@@ -1,8 +1,10 @@
 import axios from "axios"
 import { getCookie } from "./utils"
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL
+
 const apiClient = axios.create({
-  baseURL: "/api/v1",
+  baseURL: `${BASE_URL}/api/v1`,
   timeout: 8 * 1000, // 8초
   withCredentials: true,
 })

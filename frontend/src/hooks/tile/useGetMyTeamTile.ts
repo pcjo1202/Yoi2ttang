@@ -1,27 +1,36 @@
 "use client"
 
 import { getOneTeamTileMap } from "@/services/tile/api"
-import { useMutation } from "@tanstack/react-query"
+import { TileMapResponse } from "@/types/map/tile"
+import { useQuery } from "@tanstack/react-query"
 
-interface useGetTeamTileProps {
+interface useGetMyTeamTileProps {
   zodiacId: number
+  params: {
+    swLat: number
+    swLng: number
+    neLat: number
+    neLng: number
+  }
+  enabled: boolean
 }
 
-// 특정 팀 점령 지도 확인
-const useGetMyTeamTile = ({ zodiacId }: useGetTeamTileProps) => {
-  return useMutation({
-    mutationKey: ["teamTileMap"],
-    mutationFn: ({
-      swLat,
-      swLng,
-      neLat,
-      neLng,
-    }: {
-      swLat: number
-      swLng: number
-      neLat: number
-      neLng: number
-    }) => getOneTeamTileMap(zodiacId, { swLat, swLng, neLat, neLng }),
+const useGetMyTeamTile = ({
+  zodiacId,
+  params,
+  enabled,
+}: useGetMyTeamTileProps) => {
+  return useQuery<TileMapResponse>({
+    queryKey: [
+      "teamTileMap",
+      zodiacId,
+      params.swLat,
+      params.swLng,
+      params.neLat,
+      params.neLng,
+    ],
+    queryFn: () => getOneTeamTileMap(zodiacId, params),
+    enabled: enabled,
   })
 }
 

@@ -57,3 +57,35 @@ export enum TileViewOption {
   ALL = "all",
   UNCLAIMED = "unclaimed",
 }
+
+export interface TileStrategyReturnType {
+  tileData: Tile[]
+  clusterData: TileCluster[]
+  updateBoundsParams: (bounds: { sw: Coordinates; ne: Coordinates }) => void
+  updateClusterParams: (zoom: number, center: Coordinates) => void
+}
+
+export interface TilesStrategyProps {
+  selectedOption: TileViewOption | null
+  myZodiacId: number
+  memberId: string
+}
+
+export interface TileParams {
+  lat: number
+  lng: number
+  localDate: string
+}
+
+export interface BoundsParams {
+  swLat: number
+  swLng: number
+  neLat: number
+  neLng: number
+}
+
+export interface ClusterParams {
+  lat: number
+  lng: number
+  zoomLevel: number
+}

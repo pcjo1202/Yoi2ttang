@@ -1,6 +1,4 @@
 import { Payload } from "@/types/auth/auth.type"
-import { jwtDecode } from "jwt-decode"
-import { getCookie } from "../utils"
 
 export const checkNicknameValidity = (nickname: string) => {
   // 한글, 영어, 숫자만 입력 가능한 정규표현식
@@ -18,14 +16,24 @@ export const checkNicknameValidity = (nickname: string) => {
 }
 
 export const getPayload = () => {
-  const accessToken = getCookie("accessToken")
-  if (!accessToken) {
-    return null
+  // const accessToken = getCookie("accessToken")
+  // if (!accessToken) {
+  //   return null
+  // }
+
+  // const decoded = jwtDecode<Payload>(accessToken)
+
+  // return decoded
+
+  const mock_data: Payload = {
+    sub: "1234567890",
+    nickname: "test",
+    zodiacId: "1",
+    zodiacTeam: "test",
+    iat: 1719000000,
+    exp: 1719000000,
   }
-
-  const decoded = jwtDecode<Payload>(accessToken)
-
-  return decoded
+  return mock_data
 }
 
 export const checkSelf = (memberId: number) => {
