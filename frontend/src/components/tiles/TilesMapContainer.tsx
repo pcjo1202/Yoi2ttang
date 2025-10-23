@@ -16,11 +16,19 @@ const TilesMapContainer = ({
   myZodiacId,
   memberId,
 }: TilesMapContainerProps) => {
-  const { setCluster, setTiles, selectedOption } = useTileMapStore(
+  const {
+    setCluster,
+    setTiles,
+    selectedOption,
+    setIsClusterView,
+    isClusterView,
+  } = useTileMapStore(
     useShallow((state) => ({
       setCluster: state.setCluster,
       setTiles: state.setTiles,
+      setIsClusterView: state.setIsClusterView,
       selectedOption: state.selectedOption,
+      isClusterView: state.isClusterView,
     })),
   )
 
@@ -28,6 +36,7 @@ const TilesMapContainer = ({
   const { tileData, clusterData, updateBoundsParams, updateClusterParams } =
     useTileMapData({
       selectedOption,
+      isClusterView,
       myZodiacId,
       memberId,
     })
@@ -37,16 +46,19 @@ const TilesMapContainer = ({
     updateClusterParams,
     setCluster,
     setTiles,
+    setIsClusterView,
   })
 
   // 클러스터 데이터 업데이트
   useEffect(() => {
     setCluster(clusterData)
+    console.log("clusterData", clusterData)
   }, [clusterData, setCluster])
 
   // 타일 데이터 업데이트
   useEffect(() => {
     setTiles(tileData)
+    console.log("tileData", tileData)
   }, [tileData, setTiles])
 
   return (

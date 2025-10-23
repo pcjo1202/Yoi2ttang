@@ -9,6 +9,13 @@ interface QueryProviderProps {
 
 const queryClient = new QueryClient()
 
+queryClient.setDefaultOptions({
+  queries: {
+    staleTime: 1000 * 60 * 5, // 5분
+    gcTime: 1000 * 60 * 10, // 10분
+  },
+})
+
 const QueryProvider = (data: QueryProviderProps) => {
   const { children } = data
 

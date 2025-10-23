@@ -11,11 +11,13 @@ import { useState } from "react"
 interface PersonalTileStrategyProps {
   memberId: string
   enabled?: boolean
+  isClusterView: boolean
 }
 
 const usePersonalTileStrategy = ({
   memberId,
   enabled = false,
+  isClusterView,
 }: PersonalTileStrategyProps): TileStrategyReturnType => {
   const [personalTileParams, setPersonalTileParams] = useState<TileParams>({
     lat: 0,
@@ -36,14 +38,14 @@ const usePersonalTileStrategy = ({
   const { data: personalTileData } = useGetPersonalTile({
     memberId,
     params: personalTileParams,
-    enabled,
+    enabled: enabled && !isClusterView,
   })
 
   // 개인 클러스터
   const { data: personalClusterData } = useGetPersonalTileCluster({
     memberId,
     params: personalClusterParams,
-    enabled,
+    enabled: enabled && isClusterView,
   })
 
   // 타일 파라미터 업데이트

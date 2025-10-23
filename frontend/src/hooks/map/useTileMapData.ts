@@ -1,4 +1,5 @@
 import { TileStrategyReturnType, TileViewOption } from "@/types/map/tile"
+import { useMemo } from "react"
 import {
   useAllTilesStrategy,
   usePersonalTileStrategy,
@@ -8,17 +9,20 @@ import {
 interface TileDataFetcherProps {
   selectedOption: TileViewOption | null
   myZodiacId: number
+  isClusterView: boolean
   memberId: string
 }
 
 const useTileMapData = ({
   selectedOption,
+  isClusterView,
   myZodiacId,
   memberId,
 }: TileDataFetcherProps): TileStrategyReturnType => {
   // 전체 타일
   const allTiles = useAllTilesStrategy({
     selectedOption,
+    isClusterView,
     enabled:
       selectedOption === TileViewOption.ALL ||
       selectedOption === TileViewOption.UNCLAIMED,
@@ -26,6 +30,7 @@ const useTileMapData = ({
 
   // 팀 타일
   const teamTiles = useTeamTileStrategy({
+    isClusterView,
     myZodiacId,
     selectedOption,
     enabled: selectedOption === TileViewOption.TEAM,
@@ -33,23 +38,24 @@ const useTileMapData = ({
 
   // 개인 타일
   const personalTiles = usePersonalTileStrategy({
+    isClusterView,
     memberId,
     enabled: selectedOption === TileViewOption.MY,
   })
 
-  switch (selectedOption) {
-    case TileViewOption.ALL:
-    case TileViewOption.UNCLAIMED:
-      return allTiles
-    case TileViewOption.TEAM:
-      return teamTiles
-    case TileViewOption.MY:
-    case null:
-      return personalTiles
-    default:
-      console.error(`Invalid selected option: ${selectedOption}`)
-      return personalTiles // fallback
-  }
+  return useMemo(() => {
+    switch (selectedOption) {
+      case TileViewOption.ALL:
+      case TileViewOption.UNCLAIMED:
+        return allTiles
+      case TileViewOption.TEAM:
+        return teamTiles
+      case TileViewOption.MY:
+        return personalTiles
+      default:
+        return personalTiles
+    }
+  }, [allTiles, teamTiles, personalTiles, selectedOption])
 }
 
 export default useTileMapData

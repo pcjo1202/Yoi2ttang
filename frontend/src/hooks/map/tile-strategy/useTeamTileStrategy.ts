@@ -12,12 +12,14 @@ import { useState } from "react"
 interface TeamTileStrategyProps {
   myZodiacId: number
   selectedOption: TileViewOption | null
+  isClusterView: boolean
   enabled?: boolean
 }
 
 const useTeamTileStrategy = ({
   myZodiacId,
   selectedOption,
+  isClusterView,
   enabled = false,
 }: TeamTileStrategyProps): TileStrategyReturnType => {
   const [boundsParams, setBoundsParams] = useState<BoundsParams>({
@@ -36,14 +38,14 @@ const useTeamTileStrategy = ({
   const { data: teamTileData } = useGetMyTeamTile({
     zodiacId: myZodiacId,
     params: boundsParams,
-    enabled,
+    enabled: enabled && !isClusterView,
   })
 
   // 팀 클러스터
   const { data: teamClusterData } = useGetMyTeamTileCluster({
     zodiacId: myZodiacId,
     params: teamClusterParams,
-    enabled,
+    enabled: enabled && isClusterView,
   })
 
   // 타일 파라미터 업데이트

@@ -15,12 +15,16 @@ export const MIN_ZOOM_LEVEL = 11
 interface TileMapStore {
   tiles: Tile[]
   cluster: TileCluster[]
+  isClusterView: boolean
   selectedOption: TileViewOption | null
   setTiles: (tiles: Tile[] | ((tiles: Tile[]) => Tile[])) => void
   setCluster: (
     cluster: TileCluster[] | ((cluster: TileCluster[]) => TileCluster[]),
   ) => void
 
+  setIsClusterView: (
+    isClusterView: boolean | ((isClusterView: boolean) => boolean),
+  ) => void
   setSelectedOption: (
     selectedOption:
       | TileViewOption
@@ -32,6 +36,7 @@ interface TileMapStore {
 const useTileMapStore = create<TileMapStore>((set, get) => ({
   tiles: [],
   cluster: [],
+  isClusterView: false,
   selectedOption: TileViewOption.TEAM,
   setTiles: (tiles: Tile[] | ((tiles: Tile[]) => Tile[])) =>
     set({
@@ -42,6 +47,15 @@ const useTileMapStore = create<TileMapStore>((set, get) => ({
   ) =>
     set({
       cluster: typeof cluster === "function" ? cluster(get().cluster) : cluster,
+    }),
+  setIsClusterView: (
+    isClusterView: boolean | ((isClusterView: boolean) => boolean),
+  ) =>
+    set({
+      isClusterView:
+        typeof isClusterView === "function"
+          ? isClusterView(get().isClusterView)
+          : isClusterView,
     }),
 
   setSelectedOption: (

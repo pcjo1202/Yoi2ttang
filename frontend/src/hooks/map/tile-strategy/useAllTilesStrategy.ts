@@ -12,10 +12,12 @@ import { useMemo, useState } from "react"
 interface AllTilesStrategyProps {
   selectedOption: TileViewOption | null
   enabled?: boolean
+  isClusterView: boolean
 }
 
 const useAllTilesStrategy = ({
   selectedOption,
+  isClusterView,
   enabled = false,
 }: AllTilesStrategyProps): TileStrategyReturnType => {
   const [boundsParams, setBoundsParams] = useState<BoundsParams>({
@@ -33,12 +35,12 @@ const useAllTilesStrategy = ({
 
   const { data: allTilesData } = useGetAllTiles({
     params: boundsParams,
-    enabled,
+    enabled: enabled && !isClusterView,
   })
 
   const { data: allClusterData } = useGetAllTilesCluster({
     params: allClusterParams,
-    enabled,
+    enabled: enabled && isClusterView,
   })
 
   // ✅ FIX: 필터링 추가
