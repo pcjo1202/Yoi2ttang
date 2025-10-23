@@ -12,7 +12,7 @@ const metadata = [
     color: "bg-[#37E851]/40",
   },
   {
-    title: "내 타일 점령 못한 타일",
+    title: "다른 팀 타일",
     color: "bg-[#FF5959]/40",
   },
   {

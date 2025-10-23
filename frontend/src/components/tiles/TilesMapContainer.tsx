@@ -24,6 +24,7 @@ const TilesMapContainer = ({
     })),
   )
 
+  // 타일 데이터 및 클러스터 데이터 가져오기 (selectedOption 값이 변경될 때마다 새로 호출)
   const { tileData, clusterData, updateBoundsParams, updateClusterParams } =
     useTileMapData({
       selectedOption,
