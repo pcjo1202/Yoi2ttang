@@ -3,6 +3,7 @@
 import { getOneTeamTileMap } from "@/services/tile/api"
 import { TileMapResponse } from "@/types/map/tile"
 import { useQuery } from "@tanstack/react-query"
+import ngeohash from "ngeohash"
 import { useMemo } from "react"
 
 interface useGetMyTeamTileProps {

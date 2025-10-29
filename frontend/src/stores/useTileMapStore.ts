@@ -37,7 +37,7 @@ const useTileMapStore = create<TileMapStore>((set, get) => ({
   tiles: [],
   cluster: [],
   isClusterView: false,
-  selectedOption: TileViewOption.TEAM,
+  selectedOption: TileViewOption.ALL,
   setTiles: (tiles: Tile[] | ((tiles: Tile[]) => Tile[])) =>
     set({
       tiles: typeof tiles === "function" ? tiles(get().tiles) : tiles,
